@@ -1,0 +1,22 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [main, develop]
+
+jobs:
+  test_on_linux:
+    name: Test hardhat-mocha on Ubuntu with Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18]
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/checkout@v2
+      - name: Install
+        run: npm i
+      - name: Run tests
+        run: npm test
